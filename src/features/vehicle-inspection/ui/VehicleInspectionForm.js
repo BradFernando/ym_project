@@ -70,7 +70,6 @@ export default function VehicleInspectionForm() {
       "CAPOT",
       "LLANTA EMERGENCIA",
       "NEBLINEROS EN FAROS",
-      "PUERTA POSTERIOR (RH)",
       "KIT ANTI-PINCHAZOS",
       "LIMPIA VIDRIO POST",
       "TAPICERIA MIXTA",
@@ -108,6 +107,7 @@ export default function VehicleInspectionForm() {
       "PUERTA POSTERIOR (LH)",
       "PUERTA POSTERIOR (RH)",
       "RASTREO",
+      "COMPUERTA POSTERIOR",
       "RADIO",
       "TABLERO INSTRUMENTOS",
       "PINTURA",
@@ -200,19 +200,9 @@ export default function VehicleInspectionForm() {
   }
 
   const addDefectivePart = () => {
-    // Add a new empty defective part entry and automatically trigger the file input
+    // Add a new empty defective part entry
     setFormData((prev) => {
       const newParts = [...prev.defectiveParts, { file: null, previewUrl: null, observations: "" }]
-      const newIndex = newParts.length - 1
-
-      // We need to wait for the state update and component re-render before accessing the new file input
-      setTimeout(() => {
-        const fileInputElement = document.querySelector(`input[type="file"][data-index="${newIndex}"]`)
-        if (fileInputElement) {
-          fileInputElement.click()
-        }
-      }, 100)
-
       return {
         ...prev,
         defectiveParts: newParts,
@@ -283,7 +273,7 @@ export default function VehicleInspectionForm() {
   return (
     <div className="bg-blue-50 shadow-lg rounded-lg overflow-hidden">
       <div className="bg-blue-800 text-white text-center py-4">
-        <h1 className="text-2xl font-bold">INSPECCIÓN VEHÍCULOS LIVIANOS</h1>
+        <h1 className="text-2xl font-bold">GRUPO I VH: FORMULARIO INSPECCIÓN VEHÍCULOS</h1>
       </div>
 
       <div className="p-6 space-y-8">
