@@ -270,10 +270,14 @@ export default function DefectivePartsSection({ parts, onChange, onAdd, onRemove
       return 'El archivo debe ser una imagen o video'
     }
 
-    // Check file size (max 5MB for all files to prevent memory issues)
-    const maxSize = 5 * 1024 * 1024
-    if (file.size > maxSize) {
-      return 'El archivo no debe superar los 5MB'
+    // Check file size - 15MB for videos, 5MB for images
+    const maxSizeImage = 5 * 1024 * 1024
+    const maxSizeVideo = 15 * 1024 * 1024
+
+    if (file.type.startsWith('video/') && file.size > maxSizeVideo) {
+      return 'El video no debe superar los 15MB'
+    } else if (file.type.startsWith('image/') && file.size > maxSizeImage) {
+      return 'La imagen no debe superar los 5MB'
     }
 
     return null
