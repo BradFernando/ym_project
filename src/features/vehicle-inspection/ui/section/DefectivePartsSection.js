@@ -11,14 +11,17 @@ export default function DefectivePartsSection({ parts, onChange, onAdd, onRemove
   const fileInputRefs = useRef([])
 
   const validateFile = (file) => {
-    // Check if file is an image
-    if (!file.type.startsWith('image/')) {
-      return 'El archivo debe ser una imagen'
+    // Check if file is an image or video
+    if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) {
+      return 'El archivo debe ser una imagen o video'
     }
 
-    // Check file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      return 'La imagen no debe superar los 5MB'
+    // Check file size (max 10MB for videos, 5MB for images)
+    const maxSize = file.type.startsWith('video/') ? 10 * 1024 * 1024 : 5 * 1024 * 1024
+    if (file.size > maxSize) {
+      return file.type.startsWith('video/') 
+        ? 'El video no debe superar los 10MB' 
+        : 'La imagen no debe superar los 5MB'
     }
 
     return null
@@ -183,10 +186,10 @@ export default function DefectivePartsSection({ parts, onChange, onAdd, onRemove
 
   return (
     <div className="border rounded-lg overflow-hidden bg-white">
-      <div className="bg-blue-700 text-white p-2 font-semibold">PARTES DEFECTUOSAS</div>
+      <div className="bg-blue-700 text-white p-2 font-semibold">REGISTRO VISUAL</div>
       <div className="p-4">
         <div className="grid grid-cols-12 gap-4 bg-gray-100 p-2">
-          <div className="col-span-4 font-semibold text-black">IMAGEN</div>
+          <div className="col-span-4 font-semibold text-black">IMAGEN/VIDEO</div>
           <div className="col-span-8 font-semibold text-black">OBSERVACIONES</div>
         </div>
 
@@ -208,19 +211,27 @@ export default function DefectivePartsSection({ parts, onChange, onAdd, onRemove
                     onClick={() => triggerFileInput(actualIndex)}
                   >
                     {part.previewUrl ? (
-                      <Image
-                        src={part.previewUrl}
-                        alt={`Parte defectuosa ${actualIndex + 1}`}
-                        fill
-                        className="object-contain rounded-lg"
-                      />
+                      part.file && part.file.type.startsWith('video/') ? (
+                        <video 
+                          src={part.previewUrl} 
+                          controls 
+                          className="w-full h-full object-contain rounded-lg"
+                        />
+                      ) : (
+                        <Image
+                          src={part.previewUrl}
+                          alt={`Registro visual ${actualIndex + 1}`}
+                          fill
+                          className="object-contain rounded-lg"
+                        />
+                      )
                     ) : (
                       <div className="w-full h-full flex flex-col items-center justify-center">
                         <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
                         <p className="mt-2 text-sm text-gray-500">
-                          {dragActive[actualIndex] ? 'Suelta para cargar' : 'Arrastra una imagen o haz clic para seleccionar'}
+                          {dragActive[actualIndex] ? 'Suelta para cargar' : 'Arrastra una imagen o video o haz clic para seleccionar'}
                         </p>
                       </div>
                     )}
@@ -228,7 +239,7 @@ export default function DefectivePartsSection({ parts, onChange, onAdd, onRemove
                   <input
                     ref={el => fileInputRefs.current[actualIndex] = el}
                     type="file"
-                    accept="image/*"
+                    accept="image/*,video/*"
                     onChange={(e) => handleFileChange(e, actualIndex)}
                     data-index={actualIndex}
                     className="hidden"
@@ -260,7 +271,7 @@ export default function DefectivePartsSection({ parts, onChange, onAdd, onRemove
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                   </svg>
-                  Eliminar parte
+                  Eliminar registro
                 </button>
               </div>
             </div>
@@ -308,7 +319,7 @@ export default function DefectivePartsSection({ parts, onChange, onAdd, onRemove
           className="mt-4 flex items-center gap-2 text-blue-600 hover:text-blue-800"
         >
           <span className="text-xl font-bold">+</span>
-          <span>Agregar parte defectuosa</span>
+          <span>Agregar registro visual</span>
         </button>
 
       </div>

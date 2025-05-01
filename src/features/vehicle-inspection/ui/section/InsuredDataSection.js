@@ -26,6 +26,12 @@ export default function InsuredDataSection({ data, onChange }) {
         if (!/^\d{7,15}$/.test(value.replace(/\D/g, ''))) 
           return "Ingrese un número de teléfono válido"
         return ""
+      case "email":
+        if (!value) return "El correo electrónico es requerido"
+        // Basic email validation
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+          return "Ingrese un correo electrónico válido"
+        return ""
       case "coordinates":
         // Coordinates are optional
         return ""
@@ -141,6 +147,21 @@ export default function InsuredDataSection({ data, onChange }) {
           />
           {errors.phone && (
             <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
+          )}
+        </div>
+
+        <div className="mt-4">
+          <label className="block text-black mb-1">CORREO</label>
+          <input
+            type="email"
+            name="email"
+            value={data.email}
+            onChange={handleChange}
+            className={`border p-2 w-full rounded text-black bg-white ${errors.email ? 'border-red-500' : ''}`}
+            required
+          />
+          {errors.email && (
+            <p className="text-red-500 text-xs mt-1">{errors.email}</p>
           )}
         </div>
 

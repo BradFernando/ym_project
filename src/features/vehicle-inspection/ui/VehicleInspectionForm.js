@@ -22,6 +22,7 @@ export default function VehicleInspectionForm() {
       insuredName: "",
       identification: "",
       phone: "",
+      email: "",
       coordinates: "",
     },
     vehicleData: {
@@ -41,6 +42,7 @@ export default function VehicleInspectionForm() {
       mileage: "",
       tonnage: "",
       ownerName: "",
+      avaluo: "",
     },
     vehicleDescription: {},
     accessories: [],
@@ -339,6 +341,22 @@ export default function VehicleInspectionForm() {
         />
 
         <DocumentsSection documents={formData.documents} onChange={handleDocumentChange} />
+
+        <div className="mt-8 border rounded-lg overflow-hidden bg-white">
+          <div className="bg-blue-700 text-white p-2 font-semibold">FIRMAS DE RESPONSABILIDAD</div>
+          <div className="p-4">
+            <div className="grid grid-cols-2 gap-8">
+              <div className="col-span-1 flex flex-col items-center">
+                <div className="w-64 h-32 border-b-2 border-black mb-2"></div>
+                <p className="text-black font-medium">FIRMA DEL INSPECTOR</p>
+              </div>
+              <div className="col-span-1 flex flex-col items-center">
+                <div className="w-64 h-32 border-b-2 border-black mb-2"></div>
+                <p className="text-black font-medium">FIRMA DEL ASEGURADO</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )

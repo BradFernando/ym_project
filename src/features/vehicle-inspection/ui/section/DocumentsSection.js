@@ -75,6 +75,11 @@ export default function DocumentsSection({ documents, onChange }) {
           <label className="block text-black mb-1">NOTA:</label>
           <textarea className="border p-2 w-full rounded h-16 text-black" placeholder="Notas adicionales..." />
         </div>
+
+        <div className="mt-4 p-3 bg-gray-50 border rounded text-sm text-gray-700 italic">
+          <p>Este informe constituye una declaración formal con plena validez legal, y podrá ser utilizado como respaldo en cualquier proceso administrativo, judicial o requerimiento oficial. Certificamos que toda la información proporcionada por el asegurado ha sido verificada, registrada y detallada de manera precisa y objetiva por el inspector responsable.</p>
+          <p className="mt-2">En caso de que se detecte falsedad, omisión o inexactitud en los datos consignados, el asegurado asumirá la responsabilidad correspondiente conforme a la normativa legal vigente, sin perjuicio de las acciones que pudieran derivarse.</p>
+        </div>
       </div>
     </div>
   )

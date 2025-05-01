@@ -187,6 +187,35 @@ export default function VehicleDataSection({ data, onChange, brands, models, fue
         </div>
 
         <div className="mt-4">
+          <label className="block text-black mb-1">AVALÚO ($):</label>
+          <input
+            type="text"
+            name="avaluo"
+            value={data.avaluo}
+            onChange={(e) => {
+              // Format as currency (allow only numbers and format with commas)
+              const value = e.target.value.replace(/[^\d.]/g, '');
+              const formattedValue = value ? new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }).format(parseFloat(value) || 0) : '';
+
+              // Create a synthetic event to pass to the onChange handler
+              const syntheticEvent = {
+                target: {
+                  name: 'avaluo',
+                  value: formattedValue
+                }
+              };
+
+              onChange(syntheticEvent);
+            }}
+            className="border p-2 w-full rounded text-black"
+            placeholder="0.00"
+          />
+        </div>
+
+        <div className="mt-4">
           <label className="block text-black mb-1">NOMBRE PROPIETARIO MATRÍCULA:</label>
           <input
             type="text"
